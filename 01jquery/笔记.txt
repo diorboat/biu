@@ -1,0 +1,21 @@
+$:就是jQuery();
+
+
+.width():获取元素宽度;
+.height():获取元素高度;
+.size():获取元素长度;
+.css({}):设置元素样式;内部接收json对象;
+.siblings():获取与当前元素同层相邻的其他元素;
+
+
+$(this).index():获取当前选中的标签的角标;
+
+
+
+eq(index):筛选某一个;
+
+
+
+$(window).reqdy(function (){});
+$(function (){}):一个页面内可以使用多次;ready事件;类似window.onload ;
+

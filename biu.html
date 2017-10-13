@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>烟花模拟器</title>
+	<link rel="stylesheet" href="Swiper-3.4.2/dist/css/swiper.min.css">
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist\css\bootstrap.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="bootstrap-3.3.7-dist\js\bootstrap.min.js"></script>
+    <script src="Swiper-3.4.2/dist/js/swiper.min.js"></script>
+    <script src="setRem.js"></script>
+    <link href="bootstrap-2.0.3.css" rel="stylesheet">
+	<style>
+	html body{
+		overflow: hidden;
+		cursor: pointer;
+		background:#36373c;
+	}
+		*{
+			margin: 0;
+			padding:0;
+		}
+
+		.borderr{
+			width:6rem;
+			height:6rem;
+			display: inline-block;
+			border:0.2rem solid #000;
+			border-radius: 50%;
+			overflow: hidden;
+			position: relative;
+			border:0.2rem solid transparent;
+
+		}
+		li{
+			list-style: none;
+		}
+		.a{
+			position: absolute;
+			border:1rem solid transparent;
+			border-top:4rem solid #000;
+			width:8rem;
+			height: 8rem;
+			top:2rem;
+			left:-1rem;
+		}
+		.b{
+			position: absolute;
+			width:1rem;
+			height:1.5rem;
+			border-radius: 50%;
+			top:1.2rem;
+			left:0.2rem;
+			background:#fff;
+			border: 0;
+		}
+		@keyframes gun{
+			from{
+				opacity:0.9;
+				transform:translateX(-10rem);
+			}
+			100%{
+				opacity:0.9;
+				transform:translateX(30rem);
+			}
+		}
+	.progress{
+		transform-origin:0 0;
+		transform:rotateZ(270deg);
+		/*position: absolute;*/
+		position: absolute;
+		width:8rem;
+		height:0.4rem;
+		top:8rem;
+	}
+	.container{
+		position:relative;
+	}
+	.container .bar{
+		height: 100%;
+		transition:null;
+	}
+	button:focus{
+		outline: none;
+	}
+/*	span{
+		height:2rem;
+		display: block;
+		width: 4rem;
+		border:2px solid rgb(70,180,100);
+		box-shadow:0px 0px 3px #ff0;
+	}*/
+	#biu{
+		position: absolute;
+		top:300px;
+		left:400px;
+		width:50px;
+		height:50px;
+		z-index: 10;
+		transform-origin:50% 71%;
+	}
+	#emitter{
+		position: absolute;
+		top:8rem;
+		left:-0.17rem;
+		border-radius:5%;
+	}
+	#emitter span{
+		width: 50px;
+		height: 60px;
+		border: 0;
+		box-shadow: 0;
+		font-size: 50px;
+		margin-top:7px;
+		color:#5de5ce;
+	}
+	@keyframes biu1{    
+		from { opacity: 1; }    
+		100% { opacity: 0; } 
+	}
+	
+	#tishi{
+		opacity: 0;
+		outline:none
+	}
+	#tishi span{
+		outline: none;
+	}
+	button{
+		outline: none;
+		border: none;
+	}
+	.easeout{
+		animation:biu1 2s ease-out;
+	}
+	
+	</style>
+</head>
+<body>
+	<!-- <div class="container">
+		<ul class="nav nav-tabs">
+			<li><a href="">用户</a></li>
+			<li><a href=""> home</a></li>
+			<li><a href=""> home</a></li>
+			<li><a href=""> home</a></li>
+			<li><a href=""> home</a></li>
+		</ul>
+	</div> -->
+	<h1 id='load_tishi' style='color:#eee;opacity:0;font-size:5vw;position:absolute;top:20%;left:50%;'>请按住鼠标拖动</h1>
+	<div class="container" id="kuangjia" style="height:9rem">
+		
+
+
+		<img id="biu" src="指针.png" alt="">
+	<div id="zhanchang"></div>
+</body>
+<script>
+function roll0 (k) {
+	var k = Math.random()*k;
+	return k;.00
+}
+function roll (k) {
+	var k = Math.ceil(Math.random()*k);
+	return k;
+}
+function roll1 (j,k) {
+	var z = k-j;
+	var k = Math.ceil(Math.random()*z);
+	var k =j+k;
+	return k;
+}
+function roll2(j,k,l){
+	var z = k-j;
+	var x = Math.ceil(k/l);
+	var x = Math.floor(Math.random()*x);
+	var k = x*l;
+	return k;
+}
+function rollrpg(){
+
+	return "rgb("+roll1(0,255)+","+roll1(0,255)+","+roll1(0,255)+")";
+}
+</script>
+<script>
+	var biu_nor =biu.offsetTop;
+	var biu_nor2 =biu.offsetLeft;
+	var kuangjia_X = kuangjia.offsetLeft;
+	var kuangjia_Y = kuangjia.offsetTop;
+    document.addEventListener("mousemove",function(eve){
+    	var eve = eve||window.event;
+    	var x = eve.clientX;
+    	var y = eve.clientY;
+    	var sin = -(y - biu_nor - 35.5);
+    	var cos = x - (biu_nor2+kuangjia_X)- 25;   	
+    	if(sin>0){
+    		var deg1 = (Math.atan(cos/sin)*180/Math.PI);
+    	}else{
+    		var deg1 =180+ (Math.atan(cos/sin)*180/Math.PI);
+    	}
+    	$("#biu").css({"transform":"rotate("+deg1+"deg)"});
+    	
+    })
+	var nor= 0;
+	// var time1= setInterval(function(){
+	// 	console.log($("#biu").css("transform"));
+	document.body.onselectstart = function () { 
+    return false; 
+};
+	
+	window.onload=function(){
+		console.log(1);
+		$("#load_tishi").css("animation","biu1 3s ease-out");
+	}	
+	// },400);
+//但是并不能流畅使用
+    var time111 = null;
+	$(document).on("mousedown",function(eve1){
+		spd=-0.12;
+		var eve1 = eve1||window.event;
+	    	eve_x = eve1.clientX;
+	    	eve_y = eve1.clientY;
+		$(document).on("mousemove",function(eve){
+			var eve = eve||window.event;
+	    	eve_x = eve.clientX;
+	    	eve_y = eve.clientY;
+		});
+		time111 = setInterval(function(eve){
+			var sin = -(eve_y - biu_nor - 35.5);
+	    	var cos = eve_x - (biu_nor2+kuangjia_X)- 25;   	  	
+	    	if(sin>0){
+	    		var deg1 = (Math.atan(cos/sin)*180/Math.PI)-90;
+	    	}else if(sin==0){
+	    		var deg1 = -90;
+	    	}else{
+	    		var deg1 =90+ (Math.atan(cos/sin)*180/Math.PI);
+	    	}
+			var ceng = document.createElement("div");
+			$(ceng).css({"display":"block","position":"absolute","top":"335px","left":"425.7px","width":"50px","height":"2px","transform":"rotate("+deg1+"deg)translate(0px)","transform-origin":"0 50%"});
+			$(ceng).css({"transition":"transform 2s ease-out"});
+			$(ceng).css({"border":"1px solid rgb("+roll1(0,255)+","+roll1(150,255)+","+roll1(150,255)+")"});
+			
+			ceng.time = setTimeout(function(){
+				$(ceng).css({"transform":"rotate("+deg1+"deg)translate(800px)"});
+			},20)
+			kuangjia.appendChild(ceng);
+ 			ceng.time3 = setTimeout(function(){
+ 				 var arry =getComputedStyle(ceng,false).transform.split(",");
+ 				 var eve_x3 = parseInt(arry[4])+kuangjia.offsetLeft+426;
+ 				 var eve_y3 = parseInt(arry[5])+kuangjia.offsetTop+335;
+ 				 // console.log(parseInt(arry[5]));
+ 				 for (var i = 0; i <4; i++) {
+	     		chansheng(eve_x3,eve_y3,50,200,);
+ 				$(ceng).remove();
+	    		};
+ 			},2000)
+			
+		},15)
+			
+	})
+//将就版
+// $(document).on("mousedown",function(eve1){
+// 		$(document).on("mousemove",function(eve){
+// 			if(power<=0){
+// 				return 0;
+// 			}
+// 			var eve = eve||window.event;
+// 			eve.preventDefault();
+// 	    	eve_x = eve.offsetX;
+// 	    	eve_y = eve.offsetY;
+			
+// 	    	var sin = -(eve_y - biu_nor - 33.3);
+// 	    	var cos = eve_x - biu_nor2 - 25;   	
+// 	    	if(sin>0){
+// 	    		var deg1 = (Math.atan(cos/sin)*180/Math.PI)-90;
+// 	    	}else if(sin==0){
+// 	    		var deg1 = -90;
+// 	    	}else{
+// 	    		var deg1 =90+ (Math.atan(cos/sin)*180/Math.PI);
+// 	    	}
+	    	
+// 			var ceng = document.createElement("div");
+// 			$(ceng).css({"display":"block","position":"absolute","top":"335px","left":"425.7px","width":"50px","height":"2px","transform":"rotate("+deg1+"deg)translate(0px)","z-index":"1","transform-origin":"0 50%"});
+// 			$(ceng).css({"transition":"all 2s ease-out"});
+// 			$(ceng).css({"border":"1px solid rgb("+roll1(0,255)+","+roll1(150,255)+","+roll1(150,255)+")"});
+			
+// 			ceng.time = setTimeout(function(){
+// 				$(ceng).css({"transform":"rotate("+deg1+"deg)translate(1000px)"});
+// 			},1);
+// 			ceng.time2 = setTimeout(function(){
+// 				$(ceng).remove();
+// 			},2000)
+// 			spd=-0.12;
+// 			kuangjia.appendChild(ceng);
+// 		});
+			
+// 	})
+	$(document).on("mouseup",function (){
+		clearInterval(time111);
+		
+	})
+	//中心坐标，大小范围，爆炸范围,
+	function chansheng(x,y,size1,round){
+		var baozha = document.createElement("div");
+		var bili = 1.1-roll0(1);
+		var size = bili*size1;
+		var jiaodu = roll(360);
+		var weizhi = roll0(0.2)*round;
+		var mudi = (1.1-bili)*round+weizhi;
+	    // var size = roll(round);
+		$(baozha).css({"width":size+"px","height":size+"px","position":"absolute","top":(y-size/2)+"px","left":(x-size/2)+"px","border-radius":"50%","transform":"rotate("+jiaodu+"deg)translate("+weizhi+"px)"});
+		$(baozha).css({"background":rollrpg()});
+		$(baozha).css({"transition":"all 0.2s ease-out"});
+		
+		document.body.appendChild(baozha);
+		baozha.time = setTimeout(function(){
+			$(baozha).css({"opacity":"0"});
+			$(baozha).css({"transform":"rotate("+jiaodu+"deg)translate("+mudi+"px)"});
+		},10);
+
+ 		baozha.time3 = setTimeout(function(){
+ 			$(baozha).remove();
+ 		},200)
+	}
+	// $(document).on("click",function(eve2){
+	// 	var eve2 = eve2||window.event;
+	//     	eve_x2 = eve2.clientX;
+	//     	eve_y2 = eve2.clientY;
+	//     	for (var i = 0; i <10; i++) {
+	//     		chansheng(eve_x2,eve_y2,50,200,);
+	//     	};
+	// })
+	// $(function(){
+	// 	$.each($(".b"),function(i,val){
+	// 		nor =roll0(0.4)+nor;
+	// 		$(val).css({"animation":"gun 2s linear "+nor+"s infinite both"});
+	// 	})
+	// })
+	// var time1= setInterval(function(){
+	// 	$.each($(".bar"),function(i,val){
+	// 		$(val).css({"width":roll2(0,100,5)+"%"});
+	// 	});
+		
+	// },400);
+	// $.each($(".bar"),function(i,val){	
+	// 		$(val).css({"background":"#"+roll1(99,999)});
+	// 	});
+	$.each($(".progress"),function(i,val){
+		$(val).css({"background":"rgb("+roll1(50,130)+","+roll1(150,255)+","+roll1(150,255)+")"});
+		$(val).css({"left":i*0.405+"rem"});
+		});
+</script>
+
+</html>
